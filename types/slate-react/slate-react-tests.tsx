@@ -29,16 +29,33 @@ interface MyEditorState {
 }
 
 class MyEditor extends React.Component<EditorProps, MyEditorState> {
+    private readonly editor: React.RefObject<Editor>;
+
     constructor(props: EditorProps) {
         super(props);
+        this.editor = React.createRef();
         this.state = {
             value: Value.create()
         };
     }
+
+    componentDidMount() {
+        if (this.editor.current) {
+            const editor = this.editor.current;
+            editor.toggleMark('bold');
+            editor.undo();
+            editor.redo();
+        }
+    }
+
     render() {
-        return <Editor
-            value={this.state.value}
-            renderNode={ myPlugin.renderNode }
-            onChange={ myPlugin.onChange }/>;
+        return (
+            <Editor
+                ref={this.editor}
+                value={this.state.value}
+                renderNode={myPlugin.renderNode}
+                onChange={myPlugin.onChange}
+            />
+        );
     }
 }
