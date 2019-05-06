@@ -68,8 +68,7 @@ export class I18n {
 
     use(language: string): I18n;
 
-    _(id: string, values?: object, messageOptions?: MessageOptions): string;
-    _(id: MessageDescriptor): string;
+    _(id: string | MessageDescriptor, values?: object, messageOptions?: MessageOptions): string;
 
     pluralForm(n: number, pluralType?: "cardinal" | "ordinal"): string;
 }
